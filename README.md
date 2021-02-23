@@ -1,6 +1,6 @@
 # GameDevHandIn1
 
-## *Handin by:*
+## *Handin by: Gruppe 11*
 * Martin Laurvig Brandstrup, mb604
 * Jeppe Lotz Juul, jj443
 * Jannich ? ?, jm312
