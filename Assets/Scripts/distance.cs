@@ -5,21 +5,33 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class Distance : MonoBehaviour
 {
-
     public GameObject shadow;
-    public GameObject Cube1;
+    public GameObject Treasure_1;
+    public GameObject[] objs;
+
 
     public AudioSource m_bib_sound;
-
     public float volume = 1.0f;
     public float timeBetweenShots = 2.0f;
     float timer = 0.0f;
+
+    float Dist;
+    int d1;
+    int d2;
+    int d3;
+    int d4;
+    int d5;
+    int d6;
+    int d7;
+
 
     void Start()
     {
 
         shadow = GameObject.FindWithTag("Player");
-        Cube1 = GameObject.FindWithTag("Cube1");
+        Treasure_1 = GameObject.FindWithTag("T_1");
+        objs = GameObject.FindGameObjectsWithTag("T_1");
+        
  
         m_bib_sound = GetComponent<AudioSource>();
         m_bib_sound.clip = Resources.Load<AudioClip>("Sounds/metal_detector_bib_sound");
@@ -37,88 +49,111 @@ public class Distance : MonoBehaviour
 
     void FixedUpdate()
     {
-        //we destroyed the old cube so need to search for the new copy
-        Cube1 = GameObject.Find("Cube1(Clone)");
+        //TODO spawn med forskelligt navn, brug navnene til at finde nærmeste object.    
 
-        //TODO spawn med forskelligt navn, brug navnene til at finde nærmeste object.
-
-        float Distance = Vector3.Distance(shadow.transform.position,Cube1.transform.position);
-
-        Debug.Log(Distance);
-
-
-
-        //Lav dette til switch Case
-        if (Distance > 10)
+        foreach (var obj in objs)
         {
-            timer += 0.008f;
+             Dist = Vector3.Distance(shadow.transform.position,obj.transform.position);
+            if(Dist > 10){
+               // Debug.Log(Dist);
+                d1 = 1;
+            }
+                if(Dist < 10 && Dist > 8){
+                Debug.Log(Dist);
+                d2 = 2;
+            }
+                if(Dist < 8 && Dist > 6){
+                Debug.Log(Dist);
+                d3 = 3;
+            }
+                if(Dist < 6 && Dist > 4){
+                Debug.Log(Dist);
+                d4 = 4;
+            }
+                if(Dist < 4 && Dist > 2){
+                Debug.Log(Dist);
+                d5 = 5;
+            }
+                if(Dist < 2 && Dist > 1){
+                Debug.Log(Dist);
+                d6 = 6;
+            }      
+                if(Dist < 1){
+                Debug.Log(Dist);
+                d7 = 7;
+            }                  
+        }
+
+    if(d1 == 1 && d2 != 2 && d3 != 3 && d4 != 4 && d5 != 5 && d6 != 6 && d7 != 7){
+            timer += 0.040f;
             if (timer > timeBetweenShots)
             {
                 playSound();
                 timer = 0;
             }
-        }
+    }
 
-        if (Distance < 10 && Distance > 8)
-        {
-            timer += 0.012f;
+    if(d2 == 2 && d3 != 3 && d4 != 4 && d5 != 5 && d6 != 6 && d7 != 7){
+            timer += 0.070f;
             if (timer > timeBetweenShots)
             {
                 playSound();
                 timer = 0;
             }
-        }
+    }
 
-        if (Distance < 8 && Distance > 6)
-        {
-            timer += 0.020f;
+    if(d3 == 3 && d2 != 2 && d4 != 4 && d5 != 5 && d6 != 6 && d7 != 7){
+            timer += 0.10f;
             if (timer > timeBetweenShots)
             {
                 playSound();
                 timer = 0;
             }
-        }
+    }    
 
-        if (Distance < 6 && Distance > 4)
-        {
-            timer += 0.030f;
+    if(d4 == 4 && d2 != 2 && d3 != 3 && d5 != 5 && d6 != 6 && d7 != 7){
+            timer += 0.15f;
             if (timer > timeBetweenShots)
             {
                 playSound();
                 timer = 0;
             }
-        }
+    }       
 
-        if (Distance < 4 && Distance > 2)
-        {
-            timer += 0.050f;
+    if(d5 == 5 && d2 != 2 && d3 != 3 && d4 != 4 && d6 != 6 && d7 != 7){
+            timer += 0.22f;
             if (timer > timeBetweenShots)
             {
                 playSound();
                 timer = 0;
             }
-        }
+    }       
 
-        if (Distance < 2 && Distance > 1)
-        {
-            timer += 0.080f;
+    if(d6 == 6 && d2 != 2 && d3 != 3 && d4 != 4 && d5 != 5 && d7 != 7){
+            timer += 0.40f;
             if (timer > timeBetweenShots)
             {
                 playSound();
                 timer = 0;
             }
-        }
+    }       
 
-        if (Distance < 1)
-        {
-            timer += 0.2f;
+    if(d7 == 7 && d2 != 2 && d3 != 3 && d4 != 4 && d5 != 5 && d6 != 6){
+            timer += 0.68f;
             if (timer > timeBetweenShots)
             {
                 playSound();
                 timer = 0;
             }
-        }
+    }
 
+    d2 = 0;
+    d3 = 0;
+    d4 = 0;
+    d5 = 0;
+    d6 = 0;
+    d7 = 0;
+    
     }
 
 

@@ -1,26 +1,34 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject Cube1prefab;
+    public GameObject Treasure_1_prefab;
 
-
+    public Terrain Worldterrain;
+    public LayerMask TerrainLayer;
+    public static float TerrainLeft, TerrainRight, TerrainTop, TerrainBottom, TerrainWidth, TerrainLength, TerrainHeight;
     public Vector3 center;
     public Vector3 size;
 
-    private int sumAmount = 1;
+    public void Awake()
+    {
+        TerrainLeft = Worldterrain.transform.position.x+25;
+        TerrainBottom = Worldterrain.transform.position.z+25;
+        TerrainWidth = Worldterrain.terrainData.size.x-50;
+        TerrainLength = Worldterrain.terrainData.size.z-50;
+        TerrainHeight = Worldterrain.terrainData.size.y;
+        TerrainRight = TerrainLeft + TerrainWidth;
+        TerrainTop = TerrainBottom + TerrainLength;
+
+        InstantiateRandomPosition("Prefabs/Treasure_1", 20, 0f);
+
+    }
+
 
     void Start()
     {
-
-        Cube1prefab = GameObject.FindWithTag("Cube1");
-
-        for (int i = 0; i < sumAmount; i++)
-        {
-            SpawnItems();
-        }
 
     }
 
@@ -32,16 +40,39 @@ public class Spawner : MonoBehaviour
     }
 
 
-    public void SpawnItems()
+
+    public void InstantiateRandomPosition(string Resource, int Amount, float AddedHeight)
     {
-        Destroy(Cube1prefab);
 
-        Vector3 pos = center + new Vector3(Random.Range(-size.x/2 , size.x/2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
+        //Loop throught the amounth of times we want to instantiate
+        //Generate random position
 
-            Instantiate(Cube1prefab, pos, Quaternion.identity);
-        
+        var i = 0;
+        float terrainHeight = 0f;
+        RaycastHit hit;
+        float randomPositionX, randomPositionY, randomPositionZ;
+        Vector3 randomPosition = Vector3.zero;
+
+        do{
+            i++;
+            randomPositionX = Random.Range(TerrainLeft, TerrainRight);  
+            randomPositionZ = Random.Range(TerrainBottom, TerrainTop);
+
+            if(Physics.Raycast(new Vector3(randomPositionX, 9999f, randomPositionZ), Vector3.down, out hit, Mathf.Infinity, TerrainLayer))
+            {
+                terrainHeight = hit.point.y;
+            }
+
+            randomPositionY = terrainHeight + AddedHeight;
+
+            randomPosition = new Vector3(randomPositionX, randomPositionY, randomPositionZ);
+
+            Instantiate(Resources.Load(Resource, typeof(GameObject)), randomPosition, Quaternion.identity);
+            
+
+        } while (i < Amount);
+
     }
-
 
 
 }
