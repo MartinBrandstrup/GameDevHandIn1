@@ -1,6 +1,6 @@
 # GameDevHandIn1
 
-## * Handin by: *
+## *Handin by:*
 * Martin Laurvig Brandstrup, mb604
 * Jeppe Lotz Juul, jj443
 * Jannich ? ?, jm312
