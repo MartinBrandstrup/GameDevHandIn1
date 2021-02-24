@@ -22,7 +22,7 @@ public class Spawner : MonoBehaviour
         TerrainRight = TerrainLeft + TerrainWidth;
         TerrainTop = TerrainBottom + TerrainLength;
 
-        InstantiateRandomPosition("Prefabs/Treasure_1", 20, 0f);
+        InstantiateRandomPosition("Prefabs/Treasure_1", 30, 0f);
 
     }
 

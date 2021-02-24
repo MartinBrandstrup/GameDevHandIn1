@@ -118,7 +118,7 @@ public class Distances : MonoBehaviour
             }
         }
 
-        if (d2 == 2 && d3 != 3 && d4 != 4 && d5 != 5 && d6 != 6 && d7 != 7)
+        if (d2 == 2)
         {
             timer += 0.070f;
             if (timer > timeBetweenShots)
@@ -128,7 +128,7 @@ public class Distances : MonoBehaviour
             }
         }
 
-        if (d3 == 3 && d2 != 2 && d4 != 4 && d5 != 5 && d6 != 6 && d7 != 7)
+        if (d3 == 3)
         {
             timer += 0.10f;
             if (timer > timeBetweenShots)
@@ -138,7 +138,7 @@ public class Distances : MonoBehaviour
             }
         }
 
-        if (d4 == 4 && d2 != 2 && d3 != 3 && d5 != 5 && d6 != 6 && d7 != 7)
+        if (d4 == 4)
         {
             timer += 0.15f;
             if (timer > timeBetweenShots)
@@ -148,7 +148,7 @@ public class Distances : MonoBehaviour
             }
         }
 
-        if (d5 == 5 && d2 != 2 && d3 != 3 && d4 != 4 && d6 != 6 && d7 != 7)
+        if (d5 == 5)
         {
             timer += 0.22f;
             if (timer > timeBetweenShots)
@@ -158,7 +158,7 @@ public class Distances : MonoBehaviour
             }
         }
 
-        if (d6 == 6 && d2 != 2 && d3 != 3 && d4 != 4 && d5 != 5 && d7 != 7)
+        if (d6 == 6)
         {
             timer += 0.40f;
             if (timer > timeBetweenShots)
@@ -168,7 +168,7 @@ public class Distances : MonoBehaviour
             }
         }
 
-        if (d7 == 7 && d2 != 2 && d3 != 3 && d4 != 4 && d5 != 5 && d6 != 6)
+        if (d7 == 7)
         {
             timer += 0.68f;
             if (timer > timeBetweenShots)
