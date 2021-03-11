@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +9,9 @@ public class Distances : MonoBehaviour
     public GameObject shadow;
     public GameObject Treasure_1;
     public GameObject[] objs;
+    public string metaldetectorButton = "t";                // Default metaldetector button input name.
 
+    public GameObject ChildGameObject1;
     public Score curScore;
 
     List<GameObject> objList = new List<GameObject>();
@@ -28,6 +30,7 @@ public class Distances : MonoBehaviour
     int d6;
     int d7;
 
+    int a;
 
     void Start()
     {
@@ -36,7 +39,7 @@ public class Distances : MonoBehaviour
         Treasure_1 = GameObject.FindWithTag("T_1");
         objs = GameObject.FindGameObjectsWithTag("T_1");
 
-        
+
         foreach (var obj in objs)
         {
             objList.Add(obj);
@@ -56,12 +59,53 @@ public class Distances : MonoBehaviour
 
 
 
+
+    void Update()
+    {
+
+
+   /*         if(Input.GetKey(metaldetectorButton) == false)
+    {
+        ChildGameObject1.SetActive(false);
+    }
+
+    if(Input.GetKey(metaldetectorButton))
+    {
+        a = 1;
+        ChildGameObject1.SetActive(true);
+    }*/
+
+
+    if(Input.GetKeyDown(metaldetectorButton) == true)
+    {
+        if(ChildGameObject1.activeSelf == true){ChildGameObject1.SetActive(false); a = 0; return;}
+
+        if(ChildGameObject1.activeSelf == false) {ChildGameObject1.SetActive(true); a = 1; return;}
+    }
+    }
+
     void FixedUpdate()
     {
-        //TODO spawn med forskelligt navn, brug navnene til at finde nærmeste object.    
+
+   /* if(Input.GetKey(metaldetectorButton) == false)
+    {
+        ChildGameObject1.SetActive(false);
+    }
+
+    if(Input.GetKey(metaldetectorButton))
+    {
+        a = 1;
+        ChildGameObject1.SetActive(true);
+    } 
+*/
+    if(a == 1){
 
         foreach (var obj in objList)
         {
+            //only do something if object is not null (destroyed)
+            if(obj != null)
+            {
+
             Dist = Vector3.Distance(shadow.transform.position, obj.transform.position);
             if (Dist > 10)
             {
@@ -98,14 +142,13 @@ public class Distances : MonoBehaviour
                 Debug.Log(Dist);
                 d7 = 7;
                 
-                objList.Remove(obj);
+                //objList.Remove(obj);
                 //obj.SetActive(false);
                 Object.Destroy(obj);
-                Score.currentScore = Score.currentScore +1;
-
-                
-                
+                Score.currentScore = Score.currentScore +1; 
             }
+        }    
+        }
         }
 
         if (d1 == 1 && d2 != 2 && d3 != 3 && d4 != 4 && d5 != 5 && d6 != 6 && d7 != 7)
@@ -178,7 +221,8 @@ public class Distances : MonoBehaviour
                 timer = 0;
             }
         }
-
+    
+        d1 = 0;
         d2 = 0;
         d3 = 0;
         d4 = 0;
@@ -187,6 +231,6 @@ public class Distances : MonoBehaviour
         d7 = 0;
 
     }
-
+    
 
 }

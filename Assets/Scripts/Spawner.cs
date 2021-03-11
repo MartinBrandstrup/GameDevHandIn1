@@ -5,7 +5,6 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     public GameObject Treasure_1_prefab;
-
     public Terrain Worldterrain;
     public LayerMask TerrainLayer;
     public static float TerrainLeft, TerrainRight, TerrainTop, TerrainBottom, TerrainWidth, TerrainLength, TerrainHeight;
@@ -20,18 +19,11 @@ public class Spawner : MonoBehaviour
         TerrainLength = Worldterrain.terrainData.size.z-50;
         TerrainHeight = Worldterrain.terrainData.size.y;
         TerrainRight = TerrainLeft + TerrainWidth;
-        TerrainTop = TerrainBottom + TerrainLength;
+        TerrainTop = TerrainBottom + TerrainLength;   
 
-        InstantiateRandomPosition("Prefabs/Treasure_1", 30, 0f);
-
-    }
-
-
-    void Start()
-    {
+        InstantiateRandomPosition("Prefabs/Treasure_1", 25, 0f);
 
     }
-
 
     void OnDrawGizmosSelected()
     {
@@ -53,15 +45,16 @@ public class Spawner : MonoBehaviour
         float randomPositionX, randomPositionY, randomPositionZ;
         Vector3 randomPosition = Vector3.zero;
 
-        do{
-            i++;
+        do{  
+            i++;        
             randomPositionX = Random.Range(TerrainLeft, TerrainRight);  
             randomPositionZ = Random.Range(TerrainBottom, TerrainTop);
 
             if(Physics.Raycast(new Vector3(randomPositionX, 9999f, randomPositionZ), Vector3.down, out hit, Mathf.Infinity, TerrainLayer))
             {
-                terrainHeight = hit.point.y;
+                terrainHeight = hit.point.y; 
             }
+            
 
             randomPositionY = terrainHeight + AddedHeight;
 
