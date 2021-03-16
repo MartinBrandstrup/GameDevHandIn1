@@ -10,6 +10,7 @@ public class Spawner : MonoBehaviour
     public static float TerrainLeft, TerrainRight, TerrainTop, TerrainBottom, TerrainWidth, TerrainLength, TerrainHeight;
     public Vector3 center;
     public Vector3 size;
+    public static int amountOfTreasures = 25;
 
     public void Awake()
     {
@@ -21,7 +22,7 @@ public class Spawner : MonoBehaviour
         TerrainRight = TerrainLeft + TerrainWidth;
         TerrainTop = TerrainBottom + TerrainLength;   
 
-        InstantiateRandomPosition("Prefabs/Treasure_1", 25, 0f);
+        InstantiateRandomPosition("Prefabs/Treasure_1", amountOfTreasures, 0f);
 
     }
 

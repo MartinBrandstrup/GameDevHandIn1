@@ -10,6 +10,8 @@ public class Distances : MonoBehaviour
     public GameObject Treasure_1;
     public GameObject[] objs;
     public string metaldetectorButton = "t";                // Default metaldetector button input name.
+    public GameObject Mine;
+    public int mineCounter;
 
     public GameObject ChildGameObject1;
     public Score curScore;
@@ -38,6 +40,7 @@ public class Distances : MonoBehaviour
         shadow = GameObject.FindWithTag("Player");
         Treasure_1 = GameObject.FindWithTag("T_1");
         objs = GameObject.FindGameObjectsWithTag("T_1");
+        mineCounter = Spawner.amountOfTreasures;
 
 
         foreach (var obj in objs)
@@ -64,91 +67,101 @@ public class Distances : MonoBehaviour
     {
 
 
-   /*         if(Input.GetKey(metaldetectorButton) == false)
-    {
-        ChildGameObject1.SetActive(false);
-    }
+        /*         if(Input.GetKey(metaldetectorButton) == false)
+         {
+             ChildGameObject1.SetActive(false);
+         }
 
-    if(Input.GetKey(metaldetectorButton))
-    {
-        a = 1;
-        ChildGameObject1.SetActive(true);
-    }*/
+         if(Input.GetKey(metaldetectorButton))
+         {
+             a = 1;
+             ChildGameObject1.SetActive(true);
+         }*/
 
 
-    if(Input.GetKeyDown(metaldetectorButton) == true)
-    {
-        if(ChildGameObject1.activeSelf == true){ChildGameObject1.SetActive(false); a = 0; return;}
+        if (Input.GetKeyDown(metaldetectorButton) == true)
+        {
+            if (ChildGameObject1.activeSelf == true) { ChildGameObject1.SetActive(false); a = 0; return; }
 
-        if(ChildGameObject1.activeSelf == false) {ChildGameObject1.SetActive(true); a = 1; return;}
-    }
+            if (ChildGameObject1.activeSelf == false) { ChildGameObject1.SetActive(true); a = 1; return; }
+        }
     }
 
     void FixedUpdate()
     {
 
-   /* if(Input.GetKey(metaldetectorButton) == false)
-    {
-        ChildGameObject1.SetActive(false);
-    }
+        /* if(Input.GetKey(metaldetectorButton) == false)
+         {
+             ChildGameObject1.SetActive(false);
+         }
 
-    if(Input.GetKey(metaldetectorButton))
-    {
-        a = 1;
-        ChildGameObject1.SetActive(true);
-    } 
-*/
-    if(a == 1){
-
-        foreach (var obj in objList)
+         if(Input.GetKey(metaldetectorButton))
+         {
+             a = 1;
+             ChildGameObject1.SetActive(true);
+         } 
+     */
+        if (a == 1)
         {
-            //only do something if object is not null (destroyed)
-            if(obj != null)
-            {
 
-            Dist = Vector3.Distance(shadow.transform.position, obj.transform.position);
-            if (Dist > 10)
+            foreach (var obj in objList)
             {
-                // Debug.Log(Dist);
-                d1 = 1;
+                //only do something if object is not null (destroyed)
+                if (obj != null)
+                {
+
+                    Dist = Vector3.Distance(shadow.transform.position, obj.transform.position);
+                    if (Dist > 10)
+                    {
+                        // Debug.Log(Dist);
+                        d1 = 1;
+                    }
+                    if (Dist < 10 && Dist > 8)
+                    {
+                        Debug.Log(Dist);
+                        d2 = 2;
+                    }
+                    if (Dist < 8 && Dist > 6)
+                    {
+                        Debug.Log(Dist);
+                        d3 = 3;
+                    }
+                    if (Dist < 6 && Dist > 4)
+                    {
+                        Debug.Log(Dist);
+                        d4 = 4;
+                    }
+                    if (Dist < 4 && Dist > 2)
+                    {
+                        Debug.Log(Dist);
+                        d5 = 5;
+                    }
+                    if (Dist < 2 && Dist > 1)
+                    {
+                        Debug.Log(Dist);
+                        d6 = 6;
+                    }
+                    if (Dist < 1)
+                    {
+                        Debug.Log(Dist);
+                        d7 = 7;
+
+                        Object.Destroy(obj);
+                        Score.currentScore = Score.currentScore + 1;
+                        int random = Random.Range(0,mineCounter);
+                        mineCounter = mineCounter-1;
+                        Debug.Log(random +""+ mineCounter);
+                        if(mineCounter == 1)
+                        {
+                            // You win the game
+                        }
+                        if(random == 0)
+                        {
+                            RandomMineSpawn(obj.transform);
+                        }
+                    }
+                }
             }
-            if (Dist < 10 && Dist > 8)
-            {
-                Debug.Log(Dist);
-                d2 = 2;
-            }
-            if (Dist < 8 && Dist > 6)
-            {
-                Debug.Log(Dist);
-                d3 = 3;
-            }
-            if (Dist < 6 && Dist > 4)
-            {
-                Debug.Log(Dist);
-                d4 = 4;
-            }
-            if (Dist < 4 && Dist > 2)
-            {
-                Debug.Log(Dist);
-                d5 = 5;
-            }
-            if (Dist < 2 && Dist > 1)
-            {
-                Debug.Log(Dist);
-                d6 = 6;
-            }
-            if (Dist < 1)
-            {
-                Debug.Log(Dist);
-                d7 = 7;
-                
-                //objList.Remove(obj);
-                //obj.SetActive(false);
-                Object.Destroy(obj);
-                Score.currentScore = Score.currentScore +1; 
-            }
-        }    
-        }
         }
 
         if (d1 == 1 && d2 != 2 && d3 != 3 && d4 != 4 && d5 != 5 && d6 != 6 && d7 != 7)
@@ -217,11 +230,11 @@ public class Distances : MonoBehaviour
             if (timer > timeBetweenShots)
             {
                 playSound();
-            
+
                 timer = 0;
             }
         }
-    
+
         d1 = 0;
         d2 = 0;
         d3 = 0;
@@ -231,6 +244,14 @@ public class Distances : MonoBehaviour
         d7 = 0;
 
     }
-    
+
+    void RandomMineSpawn(Transform trans)
+    {
+        Object.Instantiate(Mine, trans.position, trans.rotation);
+        Score.currentScore = Score.currentScore -1;
+        // add explosion animation
+        // add death script
+    }
+
 
 }
