@@ -11,10 +11,10 @@ public class Distances : MonoBehaviour
     public GameObject[] objs;
     public string metaldetectorButton = "t";                // Default metaldetector button input name.
     public GameObject Mine;
+    public GameObject Explosion;
     public int mineCounter;
-
+    public int mineAmount;
     public GameObject ChildGameObject1;
-    public Score curScore;
 
     List<GameObject> objList = new List<GameObject>();
 
@@ -31,7 +31,6 @@ public class Distances : MonoBehaviour
     int d5;
     int d6;
     int d7;
-
     int a;
 
     void Start()
@@ -40,7 +39,8 @@ public class Distances : MonoBehaviour
         shadow = GameObject.FindWithTag("Player");
         Treasure_1 = GameObject.FindWithTag("T_1");
         objs = GameObject.FindGameObjectsWithTag("T_1");
-        mineCounter = Spawner.amountOfTreasures;
+        mineCounter = MasterSettings.amountOfTreasures;
+        mineAmount = Score.minesLeft;
 
 
         foreach (var obj in objs)
@@ -53,15 +53,10 @@ public class Distances : MonoBehaviour
 
     }
 
-
-
     public void playSound()
     {
         m_bib_sound.PlayOneShot(m_bib_sound.clip, volume);
     }
-
-
-
 
     void Update()
     {
@@ -118,44 +113,45 @@ public class Distances : MonoBehaviour
                     }
                     if (Dist < 10 && Dist > 8)
                     {
-                        Debug.Log(Dist);
+                        //Debug.Log(Dist);
                         d2 = 2;
                     }
                     if (Dist < 8 && Dist > 6)
                     {
-                        Debug.Log(Dist);
+                        //Debug.Log(Dist);
                         d3 = 3;
                     }
                     if (Dist < 6 && Dist > 4)
                     {
-                        Debug.Log(Dist);
+                        //Debug.Log(Dist);
                         d4 = 4;
                     }
                     if (Dist < 4 && Dist > 2)
                     {
-                        Debug.Log(Dist);
+                        //Debug.Log(Dist);
                         d5 = 5;
                     }
                     if (Dist < 2 && Dist > 1)
                     {
-                        Debug.Log(Dist);
+                        //Debug.Log(Dist);
                         d6 = 6;
                     }
                     if (Dist < 1)
                     {
-                        Debug.Log(Dist);
+                        //Debug.Log(Dist);
                         d7 = 7;
 
-                        Object.Destroy(obj);
-                        Score.currentScore = Score.currentScore + 1;
-                        int random = Random.Range(0,mineCounter);
-                        mineCounter = mineCounter-1;
-                        Debug.Log(random +""+ mineCounter);
-                        if(mineCounter == 1)
+                        int random = Random.Range(0, mineCounter);
+
+                        CollectTreasure(obj); //reduces mineCount by 1
+                        Debug.Log(random + "" + mineCounter);
+
+                        if (mineCounter == mineAmount + 1)
                         {
                             // You win the game
                         }
-                        if(random == 0)
+
+                        if (random <= mineAmount)
                         {
                             RandomMineSpawn(obj.transform);
                         }
@@ -245,13 +241,32 @@ public class Distances : MonoBehaviour
 
     }
 
-    void RandomMineSpawn(Transform trans)
+
+    void CollectTreasure(Object treasure)
     {
-        Object.Instantiate(Mine, trans.position, trans.rotation);
-        Score.currentScore = Score.currentScore -1;
-        // add explosion animation
-        // add death script
+        Object.Destroy(treasure);
+        Score.currentScore = Score.currentScore + 1;
+        mineCounter = mineCounter - 1;
     }
 
+    void RandomMineSpawn(Transform mineTransform)
+    {
+        Object.Instantiate(Mine, mineTransform.position, mineTransform.rotation);
+        Object.Instantiate(Explosion,mineTransform.position, mineTransform.rotation);
+        Score.currentScore = Score.currentScore - 1;
+        Score.minesLeft = Score.minesLeft -1;
+        mineAmount = mineAmount -1;
+        LoseGame();
+    }
+
+    void WinGame()
+    {
+        Score.scoreString = "You win the game! Highscore = ";
+    }
+
+    void LoseGame()
+    {
+        Score.scoreString = "You died! Highscore = ";
+    }
 
 }
