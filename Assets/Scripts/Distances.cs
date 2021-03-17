@@ -16,6 +16,9 @@ public class Distances : MonoBehaviour
     public int mineAmount;
     public GameObject ChildGameObject1;
 
+    public GameObject DeathScreen;
+
+
     List<GameObject> objList = new List<GameObject>();
 
     public AudioSource m_bib_sound;
@@ -41,7 +44,8 @@ public class Distances : MonoBehaviour
         objs = GameObject.FindGameObjectsWithTag("T_1");
         mineCounter = MasterSettings.amountOfTreasures;
         mineAmount = Score.minesLeft;
-
+        DeathScreen = GameObject.FindWithTag("Death_Screen");
+        DeathScreen.gameObject.SetActive(false);
 
         foreach (var obj in objs)
         {
@@ -267,6 +271,8 @@ public class Distances : MonoBehaviour
     void LoseGame()
     {
         Score.scoreString = "You died! Highscore = ";
+        DeathScreen.SetActive(true);
+        //Time.timeScale = 0f;
     }
 
 }
