@@ -23,3 +23,16 @@ Herudover har vi arbejdet med random instantiering af objekter i en scene.
 Nogle af de største udfordringer vi stødte på var bl.a. at undgå at disse objekter spawnede under terrænet.
 Herudover har vi også haft problemer med at kunne referere variabler fra andre Scripts. Tror vi fandt ud af det, men vi har på fornemmelsen at der findes mere elegante løsninger.
 Endeligt har vi også haft problemer med at fjerne de "skatte" vi "samler op" efter at løbe igennem dem uden at få null pointer exceptions.
+
+## Handin2
+Vi har indtil videre udelt opgaver, der inkluderer:
+- Modelereing af 'Treasure Objects'. Eventuelt også af miner (ellers stjæler vi fra storen)
+- Modelering af en PC
+- Animation af PC, inklusiv ragdoll physics
+- Udvidet UI, for det første en menu
+- Animation af miner (eksplosion + spawn?)
+- Animation af treasure spawn (pickup evt)
+- Scripts: PC health, Death, Spawn scripts etc etc
+-
+Vi har lavet model af miner, man har en random chance for at støde på. Hvis man støder på en mine vil man på nuværende tidspunkt tabe spillet.
+Der er lavet explosion med animation og tilhørende DeathUI popup med respawn button. Derudover er vi næsten færdig med at lave et nyt player objekt med animationer fra mixamo.
